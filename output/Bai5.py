@@ -7,7 +7,7 @@ c = float(input("Nhap c: "))
 
 if a == 0:
     if b != 0:
-        print("Phuong trinh bac 1, x =", -c/b)
+        print("x =", -c/b)
     else:
         print("Vo nghiem")
 else:
@@ -16,7 +16,7 @@ else:
     if delta < 0:
         print("Vo nghiem")
     elif delta == 0:
-        print("Nghiem kep x =", -b/(2*a))
+        print("Nghiem kep:", -b/(2*a))
     else:
         x1 = (-b + math.sqrt(delta)) / (2*a)
         x2 = (-b - math.sqrt(delta)) / (2*a)

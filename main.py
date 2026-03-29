@@ -23,27 +23,47 @@ def parse_exercises(text):
 # =========================
 # 3. SINH CODE
 # =========================
+def detect_type(content):
+    keywords = {
+        "chia_het": ["chia hết", "chia het"],
+        "pt_bac2": ["phương trình bậc 2", "bậc 2", "ax^2"],
+        "so_nguyen_to": ["nguyên tố", "prime"],
+    }
+
+    for key, words in keywords.items():
+        for w in words:
+            if w in content:
+                return key
+
+    return "unknown"
+
+
 def generate_code(ex):
     content = ex["content"]
+    ex_type = detect_type(content)
 
-    # Bài chia hết
-    if "chia hết cho 2" in content and "3" in content:
-        return f"""# Bai {ex['id']}
+    # ===== TEMPLATE =====
+
+    templates = {
+
+        "chia_het": f"""# Bai {ex['id']}
 n = int(input("Nhap so: "))
 
-if n % 2 == 0 and n % 3 == 0:
-    print("Chia het cho ca 2 va 3")
-elif n % 2 == 0:
-    print("Chia het cho 2")
-elif n % 3 == 0:
-    print("Chia het cho 3")
-else:
-    print("Khong chia het")
-"""
+ket_qua = []
 
-    # Bài phương trình bậc 2
-    if "phương trình bậc 2" in content:
-        return f"""# Bai {ex['id']}
+if n % 2 == 0:
+    ket_qua.append("2")
+
+if n % 3 == 0:
+    ket_qua.append("3")
+
+if ket_qua:
+    print("Chia het cho:", ", ".join(ket_qua))
+else:
+    print("Khong chia het cho 2 hoac 3")
+""",
+
+        "pt_bac2": f"""# Bai {ex['id']}
 import math
 
 a = float(input("Nhap a: "))
@@ -61,17 +81,32 @@ else:
     if delta < 0:
         print("Vo nghiem")
     elif delta == 0:
-        print("x =", -b/(2*a))
+        print("Nghiem kep:", -b/(2*a))
     else:
         x1 = (-b + math.sqrt(delta)) / (2*a)
         x2 = (-b - math.sqrt(delta)) / (2*a)
         print("x1 =", x1)
         print("x2 =", x2)
-"""
+""",
 
-    return f"""# Bai {ex['id']}
-print("Chua ho tro dang bai nay")
+        "so_nguyen_to": f"""# Bai {ex['id']}
+n = int(input("Nhap n: "))
+
+if n < 2:
+    print("Khong phai so nguyen to")
+else:
+    for i in range(2, int(n**0.5)+1):
+        if n % i == 0:
+            print("Khong phai so nguyen to")
+            break
+    else:
+        print("La so nguyen to")
 """
+    }
+
+    return templates.get(ex_type, f"""# Bai {ex['id']}
+print("AI chua hieu bai nay")
+""")
 
 
 # =========================

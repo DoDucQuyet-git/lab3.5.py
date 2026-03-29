@@ -1,11 +1,15 @@
 # Bai 4
-n = int(input("Nhap so nguyen duong: "))
+n = int(input("Nhap so: "))
 
-if n % 2 == 0 and n % 3 == 0:
-    print("Chia het cho ca 2 va 3")
-elif n % 2 == 0:
-    print("Chia het cho 2")
-elif n % 3 == 0:
-    print("Chia het cho 3")
+ket_qua = []
+
+if n % 2 == 0:
+    ket_qua.append("2")
+
+if n % 3 == 0:
+    ket_qua.append("3")
+
+if ket_qua:
+    print("Chia het cho:", ", ".join(ket_qua))
 else:
-    print("Khong chia het cho 2 va 3")
+    print("Khong chia het cho 2 hoac 3")
